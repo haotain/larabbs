@@ -919,8 +919,6 @@
             "time": "2020-09-30T07:37:11+00:00"
         },
         {
-<<<<<<< HEAD
-=======
             "name": "intervention/image",
             "version": "2.5.1",
             "source": {
@@ -1001,7 +999,6 @@
             "time": "2019-11-02T09:15:47+00:00"
         },
         {
->>>>>>> abad83c5dd66d92acef2f01f592a1b2e41580c2c
             "name": "laravel-lang/lang",
             "version": "7.0.9",
             "source": {

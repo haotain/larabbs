@@ -36,7 +36,6 @@
             </div>
           </li>
         @endguest
->>>>>>> abad83c5dd66d92acef2f01f592a1b2e41580c2c
       </ul>
     </div>
   </div>
