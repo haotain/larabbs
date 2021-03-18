@@ -10,7 +10,7 @@
       </div>
 
       <div class="card-body">
-        <form action="{{ route('users.update', $user->id) }}" method="post" accept-charset="utf-8">
+        <form action="{{ route('users.update', $user->id) }}" method="post" accept-charset="utf-8" enctype="multipart/form-data">
           {{ csrf_field() }}
           {{ method_field('put') }}
 
@@ -27,6 +27,14 @@
           <div class="form-group">
             <label for="introduction-field">个人简介</label>
             <textarea class="form-control" type="text" id="introduction-field" name="introduction" rows="3">{{ old('introduction', $user->introduction) }} </textarea>
+          </div>
+          <div class="form-group mb-4">
+            <label for="" class="avatar-lable">用户头像</label>
+            <input class="form-control-file" type="file" id="avatar" name="avatar">
+            @if ($user->avatar)
+            <br>
+            <img class="thunbnal img-responsive" src="{{ $user->avatar }}" width="200" />
+            @endif
           </div>
           <div class="well well-sm">
             <button type="submit" class="btn btn-primary">保存</button>
