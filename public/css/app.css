@@ -16138,7 +16138,7 @@ body {
 }
 
 /* header */
-.navbar-static-top {
+.navbar-static-top .categories-show-page {
   border-color: #e7e7e7;
   background-color: #fff;
   box-shadow: 0px 1px 11px 2px rgba(42, 42, 42, 0.1);
@@ -16206,4 +16206,9 @@ html {
   margin-bottom: 12px;
   border: 0;
   border-top: 1px solid #dcebf5;
+}
+
+/* Add container and footer space */
+#app > div.container {
+  margin-bottom: 100px;
 }
