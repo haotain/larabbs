@@ -50,7 +50,7 @@
             </div>
 
           <div class="well well-sm">
-            <button type="submit" class="btn btn-primary">保持</button>
+            <button type="submit" class="btn btn-primary">保存</button>
             <a class="btn btn-link float-xs-right" href="{{ route('topics.index') }}">后退</a>
           </div>
         </form>
