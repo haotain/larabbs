@@ -14,7 +14,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // 我们只在开发环境中加载此扩展包
+        if (app()->isLocal()) {
+            $this->app->register(\VIACreative\SudoSu\ServiceProvider::class);
+        }
     }
 
     /**
@@ -29,5 +32,9 @@ class AppServiceProvider extends ServiceProvider
 		\App\Models\Topic::observe(\App\Observers\TopicObserver::class);
 
         \Illuminate\Pagination\Paginator::useBootstrap();
+
+        \Horizon::auth(function($request) {
+            return \Auth::user()->hasRole('Founder');
+        });
     }
 }
