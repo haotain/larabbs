@@ -7,9 +7,8 @@ return [
     'single'  => '角色',
     'model'   => Role::class,
 
-    'permission'=> function()
-    {
-        return Auth::user()->can('manage_users');
+    'permission' => function() {
+        return \Auth::user()->can('manage_users');
     },
 
     'columns' => [
@@ -23,6 +22,7 @@ return [
             'title'  => '权限',
             'output' => function ($value, $model) {
                 $model->load('permissions');
+                // print_r(  $model);die;
                 $result = [];
                 foreach ($model->permissions as $permission) {
                     $result[] = $permission->name;
