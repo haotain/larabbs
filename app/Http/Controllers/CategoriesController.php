@@ -19,6 +19,6 @@ class CategoriesController extends Controller
         // 资源链接
         $links = $link->getAllCached();
 
-        return view('topics.index', compact('topics', 'category', 'active_users'));
+        return view('topics.index', compact('topics', 'category', 'active_users', 'links'));
     }
 }
