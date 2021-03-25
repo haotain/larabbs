@@ -7,10 +7,11 @@ return [
     'single' => '分类',
     'model'  => Category::class,
 
-    'action_permission' => [
+    'action_permissions' => [
         // 删除权限控制
         'delete' => function () {
-            return Auth::user()->hasRole('Founder');
+        // 只有站长才能删除话题分类
+            return \Auth::user()->hasRole('Founder');
         }
     ],
 
