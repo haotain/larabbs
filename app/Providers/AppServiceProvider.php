@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -37,5 +38,7 @@ class AppServiceProvider extends ServiceProvider
         \Horizon::auth(function($request) {
             return \Auth::user()->hasRole('Founder');
         });
+
+        JsonResource::withoutWrapping();
     }
 }
