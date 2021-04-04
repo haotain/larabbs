@@ -70,6 +70,9 @@ class AuthorizationsController extends Controller
         return $this->respondWithToken($token)->setStatusCode(201);
     }
 
+    /**
+     * 登录
+     */
     public function store(AuthorizationsRequest $request)
     {
         $username = $request->username;
@@ -95,12 +98,18 @@ class AuthorizationsController extends Controller
         ]);
     }
 
+    /**
+     * 刷新token
+     */
     public function update()
     {
         $token = auth('api')->refresh();
         return $this->respondWithToken($token);
     }
 
+    /**
+     * 删除token
+     */
     public function destory()
     {
         auth('api')->logout();
