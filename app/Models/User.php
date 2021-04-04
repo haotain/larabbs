@@ -12,8 +12,9 @@ use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
 use Spatie\Permission\Traits\HasRoles;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements MustVerifyEmailContract
+class User extends Authenticatable implements MustVerifyEmailContract, JWTSubject
 {
     use Traits\ActiveUserHelper;
     use Traits\LastActivedAtHelper;
@@ -38,6 +39,16 @@ class User extends Authenticatable implements MustVerifyEmailContract
 
     }
 
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -50,6 +61,8 @@ class User extends Authenticatable implements MustVerifyEmailContract
         'password',
         'introduction',
         'avatar',
+        'weixin_openid',
+        'weixin_unionid',
 
     ];
 
