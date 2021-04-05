@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CategoriesController;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -42,12 +44,18 @@ Route::prefix('v1')->namespace('Api')->name('api.v1.')->group(function() {
 
         // 某个用户的详情
         Route::get('users/{user}', 'UsersController@show')->name('users.show');
+        // 分类列表
+        Route::get('categories', 'CategoriesController@index')->name('categories.index');
 
         // 登录后可以访问的接口
         Route::middleware('auth:api')->group(function() {
             // 当前登录用户信息
             Route::get('user', 'UsersController@me')->name('user.show');
-   
+            // 编辑登录用户信息
+            Route::patch('user', 'UsersController@update')->name('user.update');
+            // 上传图片
+            Route::post('images', 'ImagesController@store')->name('images.store');
+
         });
     });
 
