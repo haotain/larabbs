@@ -37,16 +37,25 @@ class UsersController extends Controller
         return (new UserResource($user))->showSensitiveFields();
     }
 
+    /**
+     * 某个用户的详情
+     */
     public function show(User $user, Request $request)
     {
         return new UserResource($user);
     }
 
+    /**
+     * 当前登录用户信息
+     */
     public function me(Request $request)
     {
         return (new UserResource($request::user()))->showSensitiveFields();
     }
 
+    /**
+     * 编辑登录用户信息
+     */
     public function update(UserRequest $request)
     {
         $user = $request->user();
@@ -62,5 +71,14 @@ class UsersController extends Controller
         $user->update($attributes);
 
         return (new UserResource($user))->showSensitiveFields();
+    }
+
+    /**
+     * 活跃用户
+     */
+    public function activedIndex(User $user)
+    {
+        UserResource::wrap('data');
+        return UserResource::collection($user->getActiveUsers());
     }
 }

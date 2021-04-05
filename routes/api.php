@@ -54,6 +54,10 @@ Route::prefix('v1')->namespace('Api')->name('api.v1.')->group(function() {
         Route::get('users/{user}/replies', 'RepliesController@userIndex')->name('users.replies.index');
         // 某个用户发布的话题列表
         Route::get('users/{user}/topics', 'TopicsController@userIndex')->name('users.topics.index');
+        // 资源推荐
+        Route::get('links', 'LinksController@index')->name('links.index');
+        // 活跃用户
+        Route::get('actived/users', 'UsersController@activedIndex')->name('actived.users.index');
 
         // 登录后可以访问的接口
         Route::middleware('auth:api')->group(function() {
@@ -77,6 +81,7 @@ Route::prefix('v1')->namespace('Api')->name('api.v1.')->group(function() {
             Route::patch('user/read/notifications', 'NotificationsController@read')->name('user.notifications.read');
             // 当前登录用户的用户权限
             Route::get('user/permissions', 'PermissionsController@index')->name('user.permissions.index');
+
         });
     });
 
