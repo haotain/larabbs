@@ -22,6 +22,9 @@ class TopicsController extends Controller
         return new TopicResource($topic);
     }
 
+    /**
+     * 更新话题
+     */
     public function update(TopicRequest $request, Topic $topic)
     {
         $this->authorize('update', $topic);
@@ -29,5 +32,17 @@ class TopicsController extends Controller
         $topic->update($request->all());
 
         return new TopicResource($topic);
+    }
+
+    /**
+     * 删除话题
+     */
+    public function destroy(Topic $topic)
+    {
+        $this->authorize('destroy', $topic);
+
+        $topic->delete();
+
+        return response(null, 204);
     }
 }
