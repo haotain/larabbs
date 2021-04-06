@@ -6,9 +6,11 @@ use App\Http\Requests\Api\AuthorizationsRequest;
 use App\Http\Requests\Api\SocialAuthorizationRequest;
 use App\Models\User;
 use Illuminate\Auth\AuthenticationException;
+use Laravel\Passport\Http\Controllers\AccessTokenController;
 use Overtrue\LaravelSocialite\Socialite;
+use Psr\Http\Message\ServerRequestInterface;
 
-class AuthorizationsController extends Controller
+class AuthorizationsController extends AccessTokenController
 {
     /**
      * 第三方登录授权
@@ -69,22 +71,35 @@ class AuthorizationsController extends Controller
         return $this->respondWithToken($token)->setStatusCode(201);
     }
 
+
+
     /**
-     * 登录
+     * passport oauth:password 授权登录
      */
-    public function store(AuthorizationsRequest $request)
+    public function store(ServerRequestInterface $request)
     {
-        $username = $request->username;
+        return $this->issueToken($request)->setStatusCode(201);
+    }
 
-        filter_var($username, FILTER_VALIDATE_EMAIL) ? $credentials['email'] = $username : $credentials['phone'] = $username;
+    /**
+     * passport 刷新token
+     */
+    public function update(ServerRequestInterface $request)
+    {
+        return $this->issueToken($request);
+    }
 
-        $credentials['password'] = $request->password;
-
-        if (!$token = \Auth::guard('api')->attempt($credentials)) {
-            throw new AuthenticationException(trans('auth.failed'));
+    /**
+     * passport 删除token
+     */
+    public function destroy()
+    {
+        if (auth('api')->check()) {
+            auth('api')->user()->token()->revoke();
+            return response(null, 204);
+        } else {
+            throw new AuthenticationException('The token is invalid.');
         }
-
-        return $this->respondWithToken($token)->setStatusCode(201);
     }
 
 
@@ -97,21 +112,42 @@ class AuthorizationsController extends Controller
         ]);
     }
 
+    //-----------------jwt auth 使用下面方法------------------------------
+    /**
+     * 用户名密码登录
+     */
+    // public function store(AuthorizationsRequest $request)
+    // {
+    //     $username = $request->username;
+
+    //     filter_var($username, FILTER_VALIDATE_EMAIL) ? $credentials['email'] = $username : $credentials['phone'] = $username;
+
+    //     $credentials['password'] = $request->password;
+
+    //     if (!$token = \Auth::guard('api')->attempt($credentials)) {
+    //         throw new AuthenticationException(trans('auth.failed'));
+    //     }
+
+    //     return $this->respondWithToken($token)->setStatusCode(201);
+    // }
+
     /**
      * 刷新token
      */
-    public function update()
-    {
-        $token = auth('api')->refresh();
-        return $this->respondWithToken($token);
-    }
+    // public function update()
+    // {
+    //     $token = auth('api')->refresh();
+    //     return $this->respondWithToken($token);
+    // }
 
     /**
      * 删除token
      */
-    public function destory()
-    {
-        auth('api')->logout();
-        return response(null, 204);
-    }
+    // public function destroy()
+    // {
+    //     auth('api')->logout();
+    //     return response(null, 204);
+    // }
+
+     //---------------------------------------------------------
 }

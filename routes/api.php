@@ -34,7 +34,7 @@ Route::prefix('v1')->namespace('Api')->middleware('change-locale')->name('api.v1
         // 刷新token
         Route::put('authorizations/current', 'AuthorizationsController@update')->name('authorizations.update');
         // 删除token
-        Route::delete('authorizations/current', 'AuthorizationsController@destory')->name('authorizations.destroy');
+        Route::delete('authorizations/current', 'AuthorizationsController@destroy')->name('authorizations.destroy');
 
     });
 

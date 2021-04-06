@@ -11,6 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
+use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
@@ -18,7 +19,7 @@ class User extends Authenticatable implements MustVerifyEmailContract
 {
     use Traits\ActiveUserHelper;
     use Traits\LastActivedAtHelper;
-    use HasFactory, Notifiable, MustVerifyEmailTrait, HasRoles;
+    use HasFactory, Notifiable, MustVerifyEmailTrait, HasRoles, HasApiTokens;
 
     use Notifiable {
         notify as protected laravelNotify;
@@ -121,6 +122,22 @@ class User extends Authenticatable implements MustVerifyEmailContract
         }
 
         $this->attributes['avatar'] = $path;
+    }
+
+    /**
+     * passport 支持手机登录
+     * 因为默认情况下，Passport 会通过用户的邮箱查找用户
+     * 要支持手机登录，我们可以在用户模型定义了 findForPassport 方法
+     * Passport 会先检测用户模型是否存在 findForPassport 方法
+     * 如果存在就通过 findForPassport 查找用户，而不是使用默认的邮箱
+     */
+    public function findForPassport($username)
+    {
+        filter_var($username, FILTER_VALIDATE_EMAIL) ?
+        $credentials['email'] = $username :
+        $credentials['phone'] = $username;
+
+      return self::where($credentials)->first();
     }
 
 
