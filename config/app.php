@@ -177,7 +177,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        App\Providers\EasySmsServiceProvider::class,
+        App\Providers\EasySmsServiceProvider::class, // 手机服务提供者
+        App\Providers\JpushServiceProvider::class,   // 消息推送服务提供者
 
     ],
 

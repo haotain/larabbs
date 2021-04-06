@@ -8,8 +8,8 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Controller extends BaseController
 {
-    public function errorResponse($statusCode, $message=null, $code=0)
-    {
-        throw new HttpException($statusCode, $message, null, [], $code);
-    }
+    // public function errorResponse($statusCode, $message=null, $code=0)
+    // {
+    //     throw new HttpException($statusCode, $message, null, [], $code);
+    // }
 }

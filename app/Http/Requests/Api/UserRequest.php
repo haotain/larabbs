@@ -23,6 +23,9 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
+        return [
+            
+        ];
         switch($this->method()) {
             case 'POST':
                 return [
@@ -42,7 +45,7 @@ class UserRequest extends FormRequest
                     'avatar_image_id' => 'exists:images,id,type,avatar,user_id,'.$userId,
                 ];
                 break;
-            }
+        }
     }
 
     public function attributes()
@@ -60,6 +63,7 @@ class UserRequest extends FormRequest
             'name.regex' => '用户名只支持英文、数字、横杆和下划线。',
             'name.between' => '用户名必须介于 3 - 25 个字符之间。',
             'name.required' => '用户名不能为空。',
+            'avatar_image_id.exists' => '123464'
         ];
     }
 }
