@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Redis;
 use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements MustVerifyEmailContract, JWTSubject
+class User extends Authenticatable implements MustVerifyEmailContract
 {
     use Traits\ActiveUserHelper;
     use Traits\LastActivedAtHelper;
@@ -37,16 +37,6 @@ class User extends Authenticatable implements MustVerifyEmailContract, JWTSubjec
         }
         $this->laravelNotify($instance);
 
-    }
-
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    public function getJWTCustomClaims()
-    {
-        return [];
     }
 
     /**
