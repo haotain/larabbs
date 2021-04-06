@@ -14,62 +14,63 @@ class AuthorizationsController extends AccessTokenController
 {
     /**
      * 第三方登录授权
+     * 改用passport 自定义方式授权登录
      */
-    public function socialStore($type, SocialAuthorizationRequest $request)
-    {
-        $driver = Socialite::create($type);
+    // public function socialStore($type, SocialAuthorizationRequest $request)
+    // {
+    //     $driver = Socialite::create($type);
 
-        try {
+    //     try {
 
-            if ($code = $request->code) {
+    //         if ($code = $request->code) {
 
-                $oauthUser = $driver->userFromCode($code);
+    //             $oauthUser = $driver->userFromCode($code);
 
-            } else {
+    //         } else {
 
-                $tokenData['access_token'] = $request->access_token;
+    //             $tokenData['access_token'] = $request->access_token;
 
-                // 微信需要增加openid
-                if ($type == 'wechat') {
-                    $driver->withOpenid($request->openid);
-                }
+    //             // 微信需要增加openid
+    //             if ($type == 'wechat') {
+    //                 $driver->withOpenid($request->openid);
+    //             }
 
-                $oauthUser = $driver->userFromToken($request->access_token);
-            }
+    //             $oauthUser = $driver->userFromToken($request->access_token);
+    //         }
 
-        } catch (\Exception $e) {
-            throw new AuthenticationException('参数错误, 为获取用户信息');
-        }
+    //     } catch (\Exception $e) {
+    //         throw new AuthenticationException('参数错误, 为获取用户信息');
+    //     }
 
-        if (!$oauthUser->getId()) {
-            throw new AuthenticationException('参数错误，未获取用户信息');
-        }
+    //     if (!$oauthUser->getId()) {
+    //         throw new AuthenticationException('参数错误，未获取用户信息');
+    //     }
 
-        switch ($type) {
-            case 'wechat':
-                $unionid = $oauthUser->getRaw()['unionid'] ?? null;
+    //     switch ($type) {
+    //         case 'wechat':
+    //             $unionid = $oauthUser->getRaw()['unionid'] ?? null;
 
-                if ($unionid) {
-                    $user = User::where('weixin_unionid', $unionid)->first();
-                } else {
-                    $user = User::where('weixin_openid', $oauthUser->getId())->first();
-                }
+    //             if ($unionid) {
+    //                 $user = User::where('weixin_unionid', $unionid)->first();
+    //             } else {
+    //                 $user = User::where('weixin_openid', $oauthUser->getId())->first();
+    //             }
 
-                // 没有用户，默认创建一个用户
-                if (!$user) {
-                    $user = User::create([
-                        'name' => $oauthUser->getNickname(),
-                        'avatar' => $oauthUser->getAvatar(),
-                        'weixin_openid' => $oauthUser->getId(),
-                        'weixin_unionid' => $unionid,
-                    ]);
-                }
-                break;
+    //             // 没有用户，默认创建一个用户
+    //             if (!$user) {
+    //                 $user = User::create([
+    //                     'name' => $oauthUser->getNickname(),
+    //                     'avatar' => $oauthUser->getAvatar(),
+    //                     'weixin_openid' => $oauthUser->getId(),
+    //                     'weixin_unionid' => $unionid,
+    //                 ]);
+    //             }
+    //             break;
 
-        }
-        $token = auth('api')->login($user);
-        return $this->respondWithToken($token)->setStatusCode(201);
-    }
+    //     }
+    //     $token = auth('api')->login($user);
+    //     return $this->respondWithToken($token)->setStatusCode(201);
+    // }
 
 
 
