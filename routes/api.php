@@ -35,6 +35,8 @@ Route::prefix('v1')->namespace('Api')->middleware('change-locale')->name('api.v1
         Route::put('authorizations/current', 'AuthorizationsController@update')->name('authorizations.update');
         // 删除token
         Route::delete('authorizations/current', 'AuthorizationsController@destory')->name('authorizations.destroy');
+        // 小程序登录
+        Route::post('weapp/authorizations', 'AuthorizationsController@weappStore')->name('weapp.authorizations.store');
 
     });
 
