@@ -6,6 +6,7 @@ use App\Http\Requests\Api\AuthorizationsRequest;
 use App\Http\Requests\Api\SocialAuthorizationRequest;
 use App\Http\Requests\Api\WeappAuthorizationRequest;
 use App\Models\User;
+use EasyWeChatComposer\EasyWeChat;
 use Illuminate\Auth\AuthenticationException;
 use Overtrue\LaravelSocialite\Socialite;
 
@@ -123,12 +124,12 @@ class AuthorizationsController extends Controller
     {
         $code = $request->code;
 
-        // 根据code 获取 openid 和 session_Key
 
+        // 根据code 获取 openid 和 session_Key
         $minaProgram = \EasyWeChat::miniProgram();
 
         $data = $minaProgram->auth->session($code);
-
+        
         // 如果结果错误， 说明 code 已过期或者不正确， 返回 401 错误
         if (isset($data['errcode'])) {
             throw new AuthenticationException('code 不正确');
