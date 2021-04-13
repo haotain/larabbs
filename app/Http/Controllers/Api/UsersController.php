@@ -94,14 +94,14 @@ class UsersController extends Controller
             abort(403, '验证码已失效');
         }
 
-        // 判断验证码是否相等， 不相等返回 401 错误
-        if (!hash_equals((string) $verifyData['code'], $request->verification_key)) {
+          // 判断验证码是否相等，不相等反回 401 错误
+        if (!hash_equals((string)$verifyData['code'], $request->verification_code)) {
             throw new AuthenticationException('验证码错误');
         }
 
         // 获取微信的 openid 和 session_Key
         $miniProgram = \EasyWeChat::miniProgram();
-        $data = $miniProgram->auht->session($request->code);
+        $data = $miniProgram->auth->session($request->code);
 
         if (isset($data['errcode'])) {
             throw new AuthenticationException('code 不正确');
