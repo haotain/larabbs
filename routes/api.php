@@ -37,6 +37,8 @@ Route::prefix('v1')->namespace('Api')->middleware('change-locale')->name('api.v1
         Route::delete('authorizations/current', 'AuthorizationsController@destory')->name('authorizations.destroy');
         // 小程序登录
         Route::post('weapp/authorizations', 'AuthorizationsController@weappStore')->name('weapp.authorizations.store');
+        // 小程序注册
+        Route::post('weapp/users', 'UsersController@weappStore')->name('weapp.users.store');
 
     });
 
