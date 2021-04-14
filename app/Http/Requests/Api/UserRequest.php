@@ -24,7 +24,7 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            
+
         ];
         switch($this->method()) {
             case 'POST':
@@ -35,6 +35,8 @@ class UserRequest extends FormRequest
                     'verification_code' => 'required|string',
                 ];
                 break;
+                
+            case 'PUT':
             case 'PATCH':
                 $userId = auth('api')->id();
 
