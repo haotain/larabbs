@@ -129,7 +129,7 @@ class AuthorizationsController extends Controller
         $minaProgram = \EasyWeChat::miniProgram();
 
         $data = $minaProgram->auth->session($code);
-        
+
         // 如果结果错误， 说明 code 已过期或者不正确， 返回 401 错误
         if (isset($data['errcode'])) {
             throw new AuthenticationException('code 不正确');
