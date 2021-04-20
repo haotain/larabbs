@@ -126,7 +126,7 @@ class User extends Authenticatable implements MustVerifyEmailContract, JWTSubjec
     public function setAvatarAttribute($path)
     {
         // 如果不是 `http` 子串开头，那就是从后台上传的，需要补全 URL
-        if ( ! \Str::startsWith($path, 'http')) {
+        if ( ! \Str::startsWith($path, 'http') || ! \Str::startsWith($path, 'https')) {
 
             // 拼接完整的 URL
             $path = config('app.url') . "/uploads/images/avatars/$path";

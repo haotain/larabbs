@@ -84,6 +84,7 @@ Route::prefix('v1')->namespace('Api')->middleware('change-locale')->name('api.v1
             Route::get('notifications/stats', 'NotificationsController@stats')->name('notifications.stats');
             // 标记消息通知为已读
             Route::patch('user/read/notifications', 'NotificationsController@read')->name('user.notifications.read');
+            Route::put('user/read/notifications', 'NotificationsController@read')->name('user.notifications.read');
             // 当前登录用户的用户权限
             Route::get('user/permissions', 'PermissionsController@index')->name('user.permissions.index');
 

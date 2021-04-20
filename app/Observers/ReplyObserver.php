@@ -23,6 +23,7 @@ class ReplyObserver
 
     public function created(Reply $reply)
     {
+
          // 命令行运行迁移时不做这些操作！
         if (!app()->runningInconsole()) {
             // $reply->topic->increment('reply_count', 1);
